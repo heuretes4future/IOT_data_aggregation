@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sensor Data</title>
+</head>
+<body>
+    <h1>Sensor Data</h1>
+    {% for typ, content in grouped.items() %}
+        <h2>{{ typ }}</h2>
+        <table border="1">
+            <tr>
+                <th>Timestamp (UTC)</th>
+                <th>{{ content.unit }}</th>
+            </tr>
+            {% for ts, val in content.data %}
+                <tr>
+                    <td>{{ ts }}</td>
+                    <td>{{ val }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <br>
+    {% endfor %}
+</body>
+</html>

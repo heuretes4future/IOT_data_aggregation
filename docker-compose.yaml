@@ -1,0 +1,51 @@
+version: '3'
+services:
+  flask_api:
+    build: ./flask
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./flask/Sensors.db:/app/Sensors.db
+    restart: always
+    networks:
+      - iot_network
+
+  sensor_carbon:
+    build: ./sensor
+    depends_on:
+      - flask_api
+    restart: always
+    command: python3 sensor_carbon.py
+    networks:
+      - iot_network
+
+  sensor_air:
+    build: ./sensor
+    depends_on:
+      - flask_api
+    restart: always
+    command: python3 sensor_air_quality.py
+    networks:
+      - iot_network
+
+  sensor_temp:
+    build: ./sensor
+    depends_on:
+      - flask_api
+    restart: always
+    command: python3 sensor_temprature.py
+    networks:
+      - iot_network
+
+  hadoop:
+    build: ./hadoop
+    container_name: hadoop
+    volumes:
+      - ./data:/data
+    networks:
+      - iot_network
+
+networks:
+  iot_network:
+    driver: bridge
+

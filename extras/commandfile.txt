@@ -1,0 +1,47 @@
+running docker network
+docker-compose up --build
+
+creating a directory in hdfs 
+./hadoop-3.3.6/bin/hdfs dfs -mkdir -p /tmp/input 
+
+removing old processed outputs hadoop
+./hadoop-3.3.6/bin/hdfs dfs -rm -r /tmp/output
+
+
+
+prepare file to be processed HDFS
+./hadoop-3.3.6/bin/hdfs dfs -put /home/oscar/Skrivbord/Final_project/hadoop/Carbon_data.txt /tmp/input/
+
+
+
+running the process
+./hadoop-3.3.6/bin/hadoop jar ./hadoop-3.3.6/share/hadoop/tools/lib/hadoop-streaming-3.3.6.jar   -files /home/oscar/Skrivbord/Final_project/hadoop/mapper.py,/home/oscar/Skrivbord/Final_project/hadoop/reducer.py   -input /tmp/input   -output /tmp/output   -mapper "python3 mapper.py 59.8586 17.6389"   -reducer "python3 reducer.py"
+
+copy over the file to ur structure
+./hadoop-3.3.6/bin/hdfs dfs -get /tmp/output/part-00000 /home/oscar/Skrivbord/Final_project/results.txt
+
+read results directly 
+./hadoop-3.3.6/bin/hdfs dfs -text /tmp/output/part-00000
+
+
+
+Om docker skiter sig
+docker-compose down --volumes --remove-orphans
+docker system prune -af
+
+
+
+
+check readings:
+
+get the file
+/fetch?type=Carbon
+
+check the data
+/retrieve?sensor_id=1&start_time=2025-04-10T00:00:00&end_time=2025-06-10T23:59:59
+
+
+
+
+
+
