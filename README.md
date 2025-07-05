@@ -43,7 +43,4 @@ Additional commands
     Show values of sensor unit captured within timeframe 
   - http://localhost:8080/retrieve?sensor_id=1&start_time=2025-06-08T00:00:00&end_time=2025-06-09T00:00:00
 
-FUTURE ADDITIONS
- -Sensors input can be swapped out with realtime meta-data in the sensor scripts.
- -SQL structure is prepared for ease of scaling, adjustment of sensor scripts is recommended. 
 
